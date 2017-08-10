@@ -1,0 +1,70 @@
+<ion-view  class="bar-positive bg-dash">
+  	<ion-header-bar class="bar bar-positive">
+    <h1 class="title">{{nombre}}</h1> 
+  	</ion-header-bar>  
+	<ion-content class="padding-20"> 
+		<form name="preguntas">
+			<div class="row">
+				<div class="col ">
+		  			<progress max="5400" min="0" value="{{counter}}"> aqui</progress>
+		    		<span class="progress-span button-clear  button item-button-right">{{ counter | secondsToDateTime | date:'HH:mm:ss'}}</span>
+		  		</div> 
+	    	</div>
+
+	    	<ion-list ng-repeat="item in data | startFrom: currentPage * pageSize | limitTo:pageSize"> 
+				<!-- <button ion-button color="secondary" outline ng-click="logOutEmail()">logOutEmail</button> -->
+		      	<div class="row">
+		      		<div class="col">
+				      	<h4 class="m0" ng-model="$parent.titulo">{{item.titulo}}</h4>
+			    	</div>
+		    	</div> 
+		      	<div class="list">  
+			    	<p class="progress-span p-r-s">Pregunta {{currentPage+1}} de {{numberOfPages()}}</p>
+				  	<div class="card m-t-0">
+					  	<label ng-repeat="(key_child, o) in item.ops" ng-click="check()" class="item item-border item-icon-left item-radio">
+						    <input type="radio" name="{{item.pre}}" ng-model="$parent.item.res_temp" value="{{key_child}}" required>
+						    <div class="item-content no-ellipsis"> 
+						    	{{o}}  
+			              	</div>
+		              		<i class="radio-icon ion-checkmark"></i>
+					  	</label>  
+				  	</div>
+				</div>   
+
+	    	</ion-list>
+	    	
+	    	<div class="row"  >
+	    		<div class="col">
+				    <button ng-disabled="currentPage >= getData().length/pageSize - 1" class="button button-block button-light icon-right ion-refresh" ng-click="pasar(currentPage)">
+					  	Pasar Pregunta
+					</button>
+					<!-- <button class="button button-block button-light icon-right ion-refresh" ng-click="removerPregunta(currentPage)">
+					  	Pasar Pregunta
+					</button> -->
+				</div>
+			</div> 
+	    	<div class="row">
+	    		<div class="col col-50">
+			    	<button class="button button-block button-calm icon-left ion-chevron-left" ng-disabled="currentPage == 0" ng-click="anterior()">
+				        Anterior
+				    </button> 
+	    		</div>
+	    		<div class="col col-50">
+				    <!-- <button class="button button-block button-energized icon-right ion-android-exit" ng-disabled="preguntas.$invalid"  ng-if="currentPage >= getData().length/pageSize - 1" ng-click="confirmar_examen()">
+					  	Finalizar 
+					</button> -->
+				    <button class="button button-block button-balanced icon-right ion-chevron-right" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="siguiente()">
+				         Siguiente 
+				    </button>
+	    		</div>
+	    	</div>
+	    	<div class="row">
+	    		<div class="col">
+				    <button class="button button-block button-energized icon-right ion-android-exit" ng-click="confirmar_examen()">
+					  	Finalizar 
+					</button> 
+	    		</div>
+	    	</div>
+		</form>
+  	</ion-content>
+</ion-view>
