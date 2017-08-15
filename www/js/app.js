@@ -12,6 +12,7 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -41,11 +42,22 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.examenes', {
+    url: '/examenes',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/examenes.html',
+        controller: 'examenesCtrl'
+      }
+    }
+  })
+
+  .state('app.ayuda', {
+    url: '/ayuda',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/ayuda.html',
+        controller: 'ayudaCtrl'
       }
     }
   })
@@ -83,7 +95,8 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
   .state('preguntas', {
     url: '/preguntas',  
     templateUrl: 'templates/preguntas.html',
-    controller: 'preguntasCtrl' 
+    controller: 'preguntasCtrl',
+    disableHardwareBackButton : true
   })
 
   .state('felicidades', {
@@ -103,14 +116,21 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
     templateUrl: 'templates/resultados.html',
     controller: 'preguntasCtrl'
   })
+  
+  .state('recuperar', {
+    url: '/recuperar', 
+    templateUrl: 'templates/recuperarContra.html',
+    controller: 'recuperarClaveCtrl'
+  })
 
 
 
-  .state('app.browse', {
-    url: '/browse',
+  .state('app.cuenta', {
+    url: '/cuenta',
     views: {
       'menuContent': {
-        templateUrl: 'templates/browse.html'
+        templateUrl: 'templates/cuenta.html',
+        controller: 'cuentaCtrl'
       }
     }
   });

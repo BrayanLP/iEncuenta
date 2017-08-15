@@ -26,7 +26,15 @@
 				</div>   
 
 	    	</ion-list>
-	
+			<div class="row">
+				<div class="col col">
+					<a class="button button-block icon-left calm" ng-click="abrir_modal()">
+						Ver Explicación
+						<i class="icon ion-eye"></i>
+					</a> 
+					<div class="divider m0"></div>   
+				</div>
+			</div>
 	    	<div class="row">
 	    		<div class="col col-50">
 			    	<button class="button button-block button-calm icon-left ion-chevron-left" ng-disabled="currentPage == 0" ng-click="anterior()">
@@ -44,7 +52,7 @@
 	    	</div>
 	    	<div class="row">
 	    		<div class="col">
-				    <button class="button button-block button-energized icon-right ion-android-exit" ng-click="confirmar_examen()">
+				    <button class="button button-block button-energized icon-right ion-android-exit" ng-click="salir()">
 					  	Finalizar 
 					</button> 
 	    		</div>

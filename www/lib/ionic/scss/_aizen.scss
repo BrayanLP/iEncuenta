@@ -145,6 +145,9 @@ label ul li {
     border-top: 3px solid #ff0000;
     padding: 0.3rem 0.5rem;
 }
+label.balanced ul li{
+    border-top: 3px solid $balanced;
+} 
 .p0{
     padding: 0 !important;
 }
@@ -257,5 +260,7 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
     background-color: $color-positive;
 }
-
+.flex-wrap{
+    flex-wrap: wrap !important;
+}
 
