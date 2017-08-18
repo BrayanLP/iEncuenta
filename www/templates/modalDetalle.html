@@ -19,6 +19,7 @@
           <label ng-repeat="(key_child, o) in item.ops" ng-if="key_child == item.res"  class="item item-border item-icon-left item-radio">
             <input type="radio" name="{{item.pre}}" ng-model="$parent.item.res_temp" value="{{key_child}}" ng-disabled="true">
             <div class="item-content no-ellipsis"> 
+              <span  class="ion-checkmark balanced"></span>
               {{o}}  
             </div>
             <i class="radio-icon ion-checkmark"></i>

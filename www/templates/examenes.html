@@ -1,32 +1,7 @@
 <ion-view view-title="Examenes" class="bar-positive bg-dash">
   <ion-content class=""> 
-	<!-- <a class="button " ng-click="refresh()">Refrescar</a> -->
-    <!-- <a class="button " ng-click="limpiar()">limpiar</a> -->
-    <!-- <div class="row flex-wrap">
-    	<div class="col col-50 ">
-    		<div class="card">
-    			<div class="item item-divider">
-    				Examen 
-    			</div>
-    			<div class="item item-text-wrap">
-    			
-    				<canvas id="pie" width="120" height="120" class="chart chart-pie" chart-options="options" chart-data="[3,5,5]" chart-labels="labels" chart-options="options" chart-colors="colors"></canvas>
-	    			
-	    			<h5><span class="cuadrado bueno"></span> <b>1</b> Correctas<br></h5>
-			  		<h5><span class="cuadrado malo"></span> <b>2</b> Incorrectas <br> </h5>
-			  		<h5><span class="cuadrado nulo"></span> <b>3</b> sin marcar</h5>
-    			</div>
-    			<div class="item item-divider">
-    				<a class="button button-full button-calm">ver Preguntas</a>
-    			</div>
-    		</div>
-    	</div>
-    </div> -->
-    <!-- {{ nombre }} -->
-    <!-- {{ loadExamenes }} -->
     <div class="row flex-wrap">
-    	<div class="col col-50 " ng-repeat="exa in loadExamenes | startFrom: currentPage * pageSize | limitTo:pageSize">
-    		<!-- {{ $index + 1}} -->
+    	<div class="col col-50 " ng-repeat="exa in loadExamenes | startFrom: currentPage * pageSize | limitTo:pageSize"> 
             <div class="card">
     			<div class="item item-divider">
     				Examen {{$index + 1}}
@@ -46,21 +21,25 @@
     	</div>
     </div>
     <div class="padding-20">
-        <div class="row">
+        <div class="row" ng-if="loadExamenes.length > 3">
             <div class="col col-50">
                 <button class="button button-block button-calm icon-left ion-chevron-left" ng-disabled="currentPage == 0" ng-click="anterior()">
                     Anterior
                 </button> 
             </div>
-            <div class="col col-50">
-                <!-- <button class="button button-block button-energized icon-right ion-android-exit" ng-disabled="preguntas.$invalid"  ng-if="currentPage >= getData().length/pageSize - 1" ng-click="confirmar_examen()">
-                    Finalizar 
-                </button> -->
+            <div class="col col-50"> 
                 <button class="button button-block button-balanced icon-right ion-chevron-right" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="siguiente()">
                      Siguiente 
                 </button>
             </div>
         </div>
+        <label  ng-show="loadExamenes == undefined" class="item-mensaje"> 
+            <ul>
+                <li>
+                   * No tiene examenes Finalizados.
+                </li> 
+            </ul>  
+        </label>
     </div>
   </ion-content>
 </ion-view>

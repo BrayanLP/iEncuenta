@@ -5,8 +5,8 @@
 }
 .bg-dash{ 
 	/* Rectangle: */
-	background-image: url('../img/login/bg-dash.png');
-	background-size: 110%;
+	background-image: url('../img/login/bg-dash.jpg');
+	background-size: 100%;
 }
 .padding-20{
 	padding: 20px;
@@ -21,6 +21,9 @@ form.list{
 	background-color: transparent;
 	// padding: 0 !important;
 	border-width: 0px;
+}
+.bg-c{
+    background-color: #fff;
 }
 .item.item-input.item-floating-label{
 	border-bottom-width: 1px;

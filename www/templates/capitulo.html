@@ -1,8 +1,8 @@
 <ion-view view-title="{{nombre}}"  class="bar-positive bg-dash">
 	<ion-content class="padding-20">
     	<ion-list>   
-	      	<ion-item class="item-list b-w" ng-repeat="(key, cat) in data_categoria" ng-click="preguntas(key)"> 
-	        	{{cat}} 
+	      	<ion-item class="item-list b-w" ng-repeat="cat in data_categoria | orderBy:'id'" ng-click="preguntas(cat.key)"> 
+	        	{{cat.value}} 
 	      	</ion-item>
     	</ion-list>
   	</ion-content>

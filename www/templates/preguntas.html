@@ -22,9 +22,9 @@
 			    	<p class="progress-span p-r-s">Pregunta {{currentPage+1}} de {{numberOfPages()}}</p>
 				  	<div class="card m-t-0">
 					  	<label ng-repeat="(key_child, o) in item.ops" ng-click="check()" class="item item-border item-icon-left item-radio">
-						    <input type="radio" name="{{item.pre}}" ng-model="$parent.item.res_temp" value="{{key_child}}" required>
+						    <input type="radio" name="{{item.pre}}" ng-model="$parent.item.res_temp" ng-disabled="item.res_temp" value="{{key_child}}" required>
 						    <div class="item-content no-ellipsis"> 
-						    	{{o}}  
+						    	{{o}}
 			              	</div>
 		              		<i class="radio-icon ion-checkmark"></i>
 					  	</label>  

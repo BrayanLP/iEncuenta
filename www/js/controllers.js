@@ -186,8 +186,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $state.reload(true);
     $state.go('app.examenes');
     $scope.cargando();
-    
-  }
+  };
 
 })
 
@@ -242,9 +241,21 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   var id_cat = $stateParams.categoriaId;  
   var capitulo = firebase.database().ref('capitulo/' + id_cat);
   capitulo.on('value' , function(response) {   
-    $scope.data_categoria = response.val();  
-    // console.log($scope.data_categoria);  
+    var dataLoad = response.val();  
+    // console.log(dataLoad); 
+    $scope.data_categoria = [];
+    var i = 0; 
+    angular.forEach(dataLoad, function(value, key){ 
+      var temp = parseInt(key.split('_')[2]);
+      var obj = {
+        key : key,
+        value: value,
+        id: temp
+      };
+      $scope.data_categoria.push(obj); 
+    });
   });
+
   $scope.preguntas = function(key) { 
     $scope.data_temp      = []; 
     $scope.data_preguntas = [];
@@ -254,11 +265,9 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       var cap = firebase.database().ref('preguntas/' +id_cat +'/'+ key);
       cap.on('value', function(response) {   
         $scope.data_pre = response.val(); 
-        angular.forEach($scope.data_pre, function(value,i){ 
-          // angular.forEach(value, function(child ,j){  
-            value["pre"] = i; 
-            $scope.data_temp.push(value); 
-          // }); 
+        angular.forEach($scope.data_pre, function(value,i){  
+          value.pre = i; 
+          $scope.data_temp.push(value);  
         }); 
         $scope.preguntas_random(15, $scope.data_temp);   
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
@@ -337,9 +346,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   capitulos.on('value' ,function(response) {   
     $scope.data_capitulo = response.val();     
   });  
-  
-  // var zoo = ['Gato', 'Perro', 'Caballo', 'Ganso', 'Pez', 'Foca', 'Papagayo', 'Coyote', 'Milano', 'Nutria', 'Cotorra', 'Tigre'];
-  // var cantidad = 4; 
+
   $scope.preguntas_random = function(cantidad, zoo) {
     this.cantidad = cantidad;
     this.zoo = zoo;
@@ -359,15 +366,11 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     } 
     while(lote.length < cantidad); 
     $scope.data_preguntas = lote;
-    $scope.generarUid();
-    // console.log($scope.data_preguntas);
-     
-  }
+    $scope.generarUid(); 
+  };
 
-  $scope.preguntas = function(key) {
-    // console.log(key);
-    $scope.data_temp      = [];
-    // $scope.data_pre       = [];
+  $scope.preguntas = function(key) { 
+    $scope.data_temp      = []; 
     $scope.data_preguntas = [];
     $scope.data_preguntas = [];
 
@@ -377,12 +380,11 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $scope.data_pre = response.val(); 
         angular.forEach($scope.data_pre, function(value,i){ 
           angular.forEach(value, function(child ,j){  
-            child["pre"] = j; 
+            child.pre = j; 
             $scope.data_temp.push(child); 
           }); 
         }); 
-        $scope.preguntas_random(30, $scope.data_temp);   
-        // $state.go($state.current, {}, {reload: true});
+        $scope.preguntas_random(30, $scope.data_temp);    
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
         $scope.cargando("1500");
       });    
@@ -543,7 +545,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     });
   };
 
-  $scope.check = function(){
+  $scope.check = function(){ 
     $scope.generarUid($scope.data, $scope.key);
   };
 
@@ -814,19 +816,13 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
 })
 
-.controller('examenesCtrl', function($scope ,$state ,$rootScope ,$ionicPopup ,$ionicPlatform ,$ionicScrollDelegate ,$stateParams ,$timeout ,$cookies ,$filter ,$ionicLoading, $ionicHistory ){ 
-  console.log("entre 2");
-  $scope.nombre = $cookies.getAll();
-  // $scope.keys = [];
-  $scope.result = []; 
-  // $scope.loadExamenes = $cookies.getObject('examenes');  
-  // $scope.loadExamenes = [];  
+.controller('examenesCtrl', function($scope ,$state ,$rootScope ,$ionicPopup ,$ionicPlatform ,$ionicScrollDelegate ,$stateParams ,$timeout ,$cookies ,$filter ,$ionicLoading, $ionicHistory ){  
+  $scope.nombre = $cookies.getAll(); 
+  $scope.result = [];  
   $scope.currentPage = 0;
   $scope.pageSize = 4;
-  $scope.q = '';  
-  // console.log($scope.loadExamenes);
-  $scope.loadInit = function(){ 
-    console.log('cargo');
+  $scope.q = '';   
+  $scope.loadInit = function(){  
     if($scope.loadExamenes != null){ 
       $scope.mostrarGraficos(); 
     }
@@ -1188,6 +1184,13 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         return input.slice(start);
     };
 })
+
+// .filter('toArray', function() { return function(obj) {
+//     if (!(obj instanceof Object)) return obj;
+//     return _.map(obj, function(val, key) {
+//         return Object.defineProperty(val, '$key', {__proto__: null, value: val.key.split('_')});
+//     });
+// }})
 
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
