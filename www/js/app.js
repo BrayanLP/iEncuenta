@@ -10,8 +10,28 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers'])
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
-    }
-  });
+    } 
+    // $ionicPlatform.on('pause', function(){
+    //   alert('PROBANDO');
+    // });
+    // $ionicPlatform.on('resume', function(){
+    //   alert('PROBANDO');
+    // });
+    // document.addEventListener("pause", onPause, false);
+    // document.addEventListener("resume", onPause, false);
+
+    // function onPause() {
+    //     $ionicPopup.alert({
+    //       title: 'pause',
+    //       content: 'pause.'
+    //     }).then(function(res) {
+    //     });
+    // }
+    // document.addEventListener("resume", function() {
+    //     alert("The application is resuming from the background");
+    // }, false);
+  }); 
+
 
 })
 

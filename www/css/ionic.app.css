@@ -10067,3 +10067,6 @@ progress::-moz-progress-bar {
 
 .flex-wrap {
   flex-wrap: wrap !important; }
+
+audio {
+  width: 100%; }

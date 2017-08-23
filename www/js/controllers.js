@@ -110,8 +110,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.logOutEmail = function(){
     firebase.auth().signOut().then(function() {
       console.log('cerrando sesion');   
-    }, function(error) {
-      console.log(error);
+    }, function(error) { 
     });
   };
 
@@ -125,8 +124,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           $scope.temp = {
             email: add.email,
             password: add.password 
-          };
-          // $window.sessionStorage.setItem("recuerdo",JSON.stringify($scope.temp));  
+          }; 
           result.updateProfile({
               displayName: add.name,
               photoURL: "https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png"
@@ -137,8 +135,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
               });
 
               
-            }, function(error) {
-              console.log(error);
+            }, function(error) { 
             }); 
           }, function (error) {
             if(error.code  === "auth/email-already-in-use"){
@@ -147,20 +144,16 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
               $timeout(function(){
                   $scope.mensaje = "";
                 },5000);
-            }
-            // sharedUtils.hideLoading();
-            // sharedUtils.showAlert("Please note","Sign up Error");
+            } 
           });
 
-      }else{
-        // sharedUtils.showAlert("Please note","Entered data is not valid");
+      }else{ 
       }
 
   }; 
   // $scope.modal();
   $scope.limpiar_campos = function(){
-    if($scope.data.recordar !== true){
-      // $window.sessionStorage.removeItem("recuerdo");
+    if($scope.data.recordar !== true){ 
       $scope.data = {};
       $scope.data.username = '';
       $scope.data.password = '';
@@ -177,7 +170,6 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       showDelay: 0
     });
     $timeout(function () {
-      
       $ionicLoading.hide(); 
     }, 2000);
   };
@@ -202,17 +194,9 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
   $scope.getNombre = function(n){  
     $cookies.putObject('nombre', n);
-  };
-  // console.log($state.current.name);
+  }; 
   var redirect = $ionicPlatform.registerBackButtonAction(
-    function() {
-      // if(
-      //     $state.current.name === 'app.examenes' || 
-      //     $state.current.name === 'app.ayuda' ||
-      //     $state.current.name === 'app.cuenta'
-      //   ){
-        
-      // }
+    function() { 
       if($state.current.name === 'app.ramas'){
         $ionicPopup.confirm({
           title: 'Esta seguro de salir !',
@@ -220,15 +204,13 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         }).then(function(res) {
           if(res) {
             ionic.Platform.exitApp();
-          } else {
-            console.log('continuar en la app');
+          } else { 
           }
         });  
       }
       else{
         $ionicHistory.goBack();  
-      }
-      // alert("This isx the first page")
+      } 
     }, 100
   );
   $scope.$on('$destroy', redirect);
@@ -241,8 +223,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   var id_cat = $stateParams.categoriaId;  
   var capitulo = firebase.database().ref('capitulo/' + id_cat);
   capitulo.on('value' , function(response) {   
-    var dataLoad = response.val();  
-    // console.log(dataLoad); 
+    var dataLoad = response.val();   
     $scope.data_categoria = [];
     var i = 0; 
     angular.forEach(dataLoad, function(value, key){ 
@@ -269,9 +250,10 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           value.pre = i; 
           $scope.data_temp.push(value);  
         }); 
-        $scope.preguntas_random(15, $scope.data_temp);   
+        $scope.preguntas_random(50, $scope.data_temp);   
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
         $scope.cargando("1500");
+        $cookies.putObject('hora','1');
       });    
     }
     else{  
@@ -316,8 +298,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           updateExamenes[$scope.key] = objExamen; 
           examenes.update(updateExamenes); 
 
-          $cookies.putObject('key', $scope.key);
-          // console.log($cookies.getAll());
+          $cookies.putObject('key', $scope.key); 
           
         } 
       } 
@@ -384,19 +365,14 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
             $scope.data_temp.push(child); 
           }); 
         }); 
-        $scope.preguntas_random(30, $scope.data_temp);    
+        $scope.preguntas_random(200, $scope.data_temp);    
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
         $scope.cargando("1500");
+        $cookies.putObject('hora','2');
       });    
     }
     else{  
       console.log("ocurrio algo al generar");
-      // var detalle_pre = firebase.database().ref('preguntas/' + key);
-      // detalle_pre.once('value', function(response) {   
-      //   $scope.data_preguntas = response.val();  
-      //   // console.log($scope.data_preguntas);  
-      //   $state.go('preguntas'); 
-      // });  
     }
   }; 
 
@@ -410,16 +386,12 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           var updateExamen = {};
           updateExamen[$scope.key] = true; 
           examen.update(updateExamen); 
-
           var objExamen = JSON.stringify($scope.data_preguntas);
           var examenes = firebase.database().ref('examenes');
           var updateExamenes = {};
           updateExamenes[$scope.key] = objExamen; 
           examenes.update(updateExamenes); 
-
-          $cookies.putObject('key', $scope.key);
-          console.log($cookies.getAll());
-          
+          $cookies.putObject('key', $scope.key); 
         } 
       } 
     });
@@ -439,8 +411,8 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
 })
 
-.controller('preguntasCtrl', function($scope ,$state ,$ionicPopup ,$ionicScrollDelegate ,$timeout ,$cookies ,$filter ,$ionicLoading, $window, $ionicPlatform, $ionicHistory ) { 
-  var redirect = $ionicPlatform.registerBackButtonAction(
+.controller('preguntasCtrl', function($scope ,$state ,$ionicPopup ,$ionicScrollDelegate ,$timeout ,$cookies ,$filter ,$ionicLoading, $window, $ionicPlatform, $ionicHistory ) {  
+  var backbutton = $ionicPlatform.registerBackButtonAction(
     function() {
       $ionicPopup.alert({
         title: 'Quieres Salir?',
@@ -448,12 +420,23 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       }).then(function(res) {
       });
     }, 100
-  );
+  ); 
+  var resumen = $ionicPlatform.on('resume', function(event) {
+    $scope.restatTimeout();
+  });
 
-  $scope.$on('$destroy', redirect);
+  var pausa = $ionicPlatform.on('pause', function(event) {
+    $scope.stopTimeout(); 
+  });
+ 
+  $scope.$on('$destroy', function(event) {
+    resumen();
+    backbutton();
+    pausa();
+  });
+
   $scope.nombre = $cookies.getObject('nombre');
-  $scope.key = $cookies.getObject('key');
-  // console.log($cookies.getAll());
+  $scope.key = $cookies.getObject('key'); 
   $scope.currentPage = 0;
   $scope.pageSize = 1;
   $scope.q = '';
@@ -469,29 +452,6 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     }); 
   };
 
-  // $scope.cargarPreguntar = function(){
-  //   angular.forEach(pre,function(value,i){
-  //     var pregunta = firebase.database().ref('preguntas/'+value.capitulo+'/'+value.sub_capitulo);
-  //     // var updateExamenes = {};
-  //     var obj = { 
-  //           [value.id]: {
-  //             titulo: value.pregunta,
-  //             ops: {
-  //               o_1: value.o_1,
-  //               o_2: value.o_2,
-  //               o_3: value.o_3,
-  //               o_4: value.o_4
-  //             },
-  //             res: value.resultado,
-  //             det: value.detalle
-  //           }
-  //     };
-  //     // updateExamenes[$rootScope.key] = obj; 
-  //     // pregunta.update(obj); 
-  //     console.log(obj);
-  //   });
-  // };
-
   $scope.pasar = function(id){
     $scope.cargando("1500");
     var id_obj = id; 
@@ -500,19 +460,8 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $scope.generarUid($scope.data, $scope.key);
   };
 
-  // $scope.removerPregunta = function(id){
-  //   $scope.cargando("500");
-  //   var id_obj = id;  
-  //   $scope.data.splice(id_obj,1); 
-  //   $cookies.putObject('preguntas', $scope.data); 
-  //   // $cookies.putObject('preguntas_temp', $scope.data_temp);
-  //   console.log($scope.data_temp);  
-  // };
-
   $scope.finalizar = function(){ 
-    // console.log($scope.data);
     $scope.data = [];
-    // console.log($scope.data);
     $scope.cargando('1500');  
     $state.go('felicidades');  
   };
@@ -576,7 +525,29 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $scope.cambioPagina();
   };
 
-  $scope.counter = 60 * 90;
+  $scope.initTime = function(){
+    var hora = parseInt($cookies.getObject('hora')); 
+    if(hora === 2){
+      var cant = 60 * 120;
+      $scope.counterMax = cant;
+      $scope.counter = cant;
+      $scope.stopped = false;
+    }
+    else if(hora === 1){
+      var cant = 60 * 60;
+      $scope.counterMax = cant;
+      $scope.counter = cant;
+      $scope.stopped = false;
+      
+    }
+    else{
+      // console.log('tiempo indefinido');
+
+    }
+
+    
+  }
+  $scope.initTime();
   // $scope.counter = 100;
   $scope.tiempoPorPregunta = function(){
     $scope.counter--;
@@ -587,31 +558,37 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     } 
   };
 
-  $scope.tiempoPorPregunta();
+  var timer_object = $timeout($scope.tiempoPorPregunta, 1000);
+
+  $scope.stopTimeout = function() {
+    $scope.stopped = true;
+    $timeout.cancel(timer_object);
+  }
+
+  $scope.restatTimeout = function() {
+    $scope.stopped = false;
+    timer_object = $timeout($scope.tiempoPorPregunta, 1000);
+  }
+
+  $scope.play = function(src) {
+    var media = new Media(src, null, null, mediaStatusCallback);
+    $cordovaMedia.play(media);
+  }
+
+  // $scope.tiempoPorPregunta();
   $scope.loadPreguntas();
 
   $scope.getData = function () { 
-    return $filter('filter')($scope.data, $scope.q)
+    return $filter('filter')($scope.data, $scope.q);
   };
   $scope.numberOfPages=function(){
     return Math.ceil($scope.getData().length/$scope.pageSize);                
   };
-  console.log($ionicHistory);
-  // $ionicPlatform.registerBackButtonAction(function(){
-  //   console.log($ionicHistory.currentStateName);
-  //   if($ionicHistory.currentStateName === 'someStateName'){
-  //     event.preventDefault();
-  //   }else{
-  //     $ionicHistory.goBack();
-  //   }
-  // }, 100);
-
 })
 
 .controller('felicidadesCtrl', function($scope ,$state ,$rootScope ,$ionicPopup ,$ionicPlatform ,$ionicScrollDelegate ,$stateParams ,$timeout ,$cookies ,$filter ,$ionicLoading ) {     
   var redirect = $ionicPlatform.registerBackButtonAction(
-    function() {
-      // alert("This isx the first page")
+    function() { 
       $ionicPopup.alert({
         title: 'Importante !',
         content: 'No es posible retroceder.'
@@ -646,8 +623,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     var preguntas = firebase.database().ref('examenes/'+ $scope.key);
     preguntas.on('value' , function(snapshot) {  
       $scope.data = JSON.parse(snapshot.val());    
-      $scope.initData();
-      console.log($scope.data, $scope.key);
+      $scope.initData(); 
     }); 
   };
   
@@ -669,9 +645,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $scope.cargando("500");
     var id_obj = id;  
     $scope.data.splice(id_obj,1); 
-    $cookies.putObject('preguntas', $scope.data); 
-    // $cookies.putObject('preguntas_temp', $scope.data_temp);
-    console.log($scope.data_temp);  
+    $cookies.putObject('preguntas', $scope.data);   
   };
 
   $scope.finalizar = function(){ 
@@ -697,7 +671,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.initGrafico = function(){
     /* Gráfico*/
     $scope.labels = ["Preguntas Correctas", "Preguntas Incorrectas", "Perguntas sin Marcar"];
-    $scope.colors = ["#008000","#ff0000","#d4d4d4"]
+    $scope.colors = ["#008000","#ff0000","#d4d4d4"];
     $scope.grafico = [$scope.bueno, $scope.malo, $scope.nulo];
   };
 
@@ -715,11 +689,8 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   };
 
   $scope.salir = function(){
-    $scope.data = [];
-    // $cookies.putObject('preguntas',$scope.data);
-    // $cookies.putObject('preguntas_temp', $scope.data); 
-    $scope.cargando('1500');
-    console.log($cookies.getAll());
+    $scope.data = [];  
+    $scope.cargando('1500'); 
     $state.go('app.ramas'); 
   };
 
@@ -730,7 +701,6 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 .controller('detalleCtrl',function($scope ,$stateParams ,$state, $ionicModal,$filter ,$timeout,$ionicScrollDelegate ,$ionicLoading, $ionicPlatform, $ionicPopup){
   var redirect = $ionicPlatform.registerBackButtonAction(
     function() {
-      // alert("This isx the first page")
       $ionicPopup.alert({
         title: 'Importante !',
         content: 'No es posible retroceder.'
@@ -743,10 +713,9 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.loadPreguntas = function(){
     var preguntas = firebase.database().ref('examenes/'+id_detalle);
     preguntas.on('value' , function(snapshot) {  
-      $scope.detallePreguntas = JSON.parse(snapshot.val());   
-      // console.log("entre");
+      $scope.detallePreguntas = JSON.parse(snapshot.val());    
     }); 
-  }
+  };
 
   $scope.loadPreguntas();
 
@@ -757,11 +726,11 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
   $scope.getData = function () { 
     return $filter('filter')($scope.detallePreguntas, $scope.q);
-  }
+  };
 
   $scope.numberOfPages=function(){
     return Math.ceil($scope.getData().length/$scope.pageSize);                
-  }
+  };
  
 
   $scope.cambioPagina = function() {
@@ -829,13 +798,12 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     else{ 
       $scope.mostrarGraficos(); 
     }
-  }
+  };
 
   $scope.mostrarGraficos = function(){
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) { 
-        if(user.emailVerified){    
-          // $scope.keys = [];  
+        if(user.emailVerified){      
           if($scope.keys != undefined){
             $scope.loadPreguntas();
           }
@@ -853,8 +821,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   };
 
   $scope.loadPreguntas = function(data){ 
-    if(data){
-      // $scope.keys = $cookies.get('keys');
+    if(data){ 
       if($scope.keys != undefined){  
         angular.forEach($scope.keys, function(value){
           var examenesKey = firebase.database().ref('examenes/'+ value);
@@ -863,13 +830,11 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
             $scope.generandoResultados($scope.getExamen, value); 
           }); 
 
-        })
+        });
       }
       else{ 
         $scope.keys = []; 
-        angular.forEach(data, function(value,i){  
-          // $scope.keys.push(i);
-          // $cookies.putObject('keys', $scope.keys);
+        angular.forEach(data, function(value,i){   
           var examenesKey = firebase.database().ref('examenes/'+ i);
           examenesKey.on('value' , function(snapshot) {  
             $scope.getExamen = JSON.parse(snapshot.val());    
@@ -881,9 +846,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     }
     else{
       $scope.keys = []; 
-      angular.forEach(data, function(value,i){ 
-        // $scope.keys.push(i);
-        // $cookies.putObject('keys', $scope.keys);
+      angular.forEach(data, function(value,i){  
         var examenesKey = firebase.database().ref('examenes/'+ i);
         examenesKey.on('value' , function(snapshot) {  
           $scope.getExamen = JSON.parse(snapshot.val());    
@@ -919,18 +882,15 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         'malo': $scope.malo,
         'key': key
     }; 
-    $scope.result.push(obj); 
-    // $cookies.putObject('examenes', $scope.result); 
-    $scope.loadExamenes = $scope.result;
-    console.log($scope.loadExamenes);
+    $scope.result.push(obj);   
+    $scope.loadExamenes = $scope.result; 
     $scope.$digest();     
   };
 
   $scope.initGrafico = function(){
     /* Gráfico*/
     $scope.labels = ["Preguntas Correctas", "Preguntas Incorrectas", "Perguntas sin Marcar"];
-    $scope.colors = ["#008000","#ff0000","#d4d4d4"]
-    // $scope.grafico = [10, 15, 7];
+    $scope.colors = ["#008000","#ff0000","#d4d4d4"];
   };
   
   $scope.refresh = function(){
@@ -940,7 +900,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
   $scope.limpiar = function(){
     $cookies.remove('examenes',[]); 
-    $scope.loadExamenes = []; ;
+    $scope.loadExamenes = [];
   };
 
   $scope.cargando = function(time){
@@ -958,10 +918,10 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
   $scope.actualizar = function(id){ 
     $state.reload(true); 
-  }
+  };
   
   $scope.getData = function () { 
-    return $filter('filter')($scope.loadExamenes, $scope.q)
+    return $filter('filter')($scope.loadExamenes, $scope.q);
   };
   $scope.numberOfPages = function(){
     return Math.ceil($scope.getData().length/$scope.pageSize);                
@@ -980,9 +940,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $scope.currentPage = $scope.currentPage + 1;
     $scope.cambioPagina();
   };
-
-  // $cookies.remove('keys',[]);
-  // $cookies.remove('examenes',[]);
+ 
   $scope.initGrafico();
   $scope.loadInit();
 
@@ -993,16 +951,8 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.uid = $cookies.getObject('uid');
   $scope.mensajeNombre = false;
   $scope.mensajeContra = false;
-  $scope.mensajeErrorContra == false;
-  $scope.mensajeErrorCoinciden = false;
-  // $scope.nombre_completo = 'prueba';
-  // $scope.getInfo = {};
-  // $scope.getInfo.pass = '';
-  // $scope.getInfo.pass2 = '';
-  // console.log($scope.uid);
-  // console.log($cookies.getAll());
-  console.log($cookies.getAll());
-  // console.log();
+  $scope.mensajeErrorContra = false;
+  $scope.mensajeErrorCoinciden = false;  
   var usuario = firebase.database().ref('usuarios/' + $scope.uid);
   usuario.on('value' , function(response) {   
     $scope.getInfo = response.val();
@@ -1019,7 +969,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       $scope.getInfo.pass2 != '' && $scope.getInfo.pass2 != undefined && 
       $scope.getInfo.pass === $scope.getInfo.pass2
        ){
-      console.log("estoy modificando todo"); 
+      // console.log("estoy modificando todo"); 
       $scope.actualizarNombre();
       $scope.actualizarContrasena(); 
       $scope.getInfo.pass = '';
@@ -1032,7 +982,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       ($scope.getInfo.pass2 != '' && $scope.getInfo.pass2 != undefined ) &&
       $scope.getInfo.pass === $scope.getInfo.pass2
       ){
-      console.log('estoy modificando solo la contraseña'); 
+      // console.log('estoy modificando solo la contraseña'); 
       $scope.actualizarContrasena(); 
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
@@ -1050,17 +1000,17 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       $scope.getInfo.pass != $scope.getInfo.pass2 &&
       $scope.getInfo.nombre_completo === $scope.temp.nombre_completo
       ){
-      console.log("contrasenas no coinciden");
+      // console.log("contrasenas no coinciden");
       $scope.contraNoCoincide();
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
     }
     else{
-      console.log("no hice nada");
+      // console.log("no hice nada");
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
     }
-  }
+  };
 
   $scope.actualizarNombre = function(){
     var data = firebase.database().ref('usuarios').child($scope.uid);
@@ -1068,13 +1018,12 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
     user.updateProfile({
       displayName: $scope.getInfo.nombre_completo
-    }).then(function() {
-      // Update successful.
+    }).then(function() { 
       data.update({'nombre_completo':$scope.getInfo.nombre_completo});
       $scope.$apply(function(){
         $rootScope.nombre_completo = $scope.getInfo.nombre_completo;
         $scope.mensajeNombre = true;
-      })
+      });
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
       $timeout(function () { 
@@ -1093,7 +1042,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         var obj = {
           email: $cookies.getObject('accesos').email,
           password: $scope.getInfo.pass
-        }
+        };
         $scope.$apply(function(){
           $cookies.putObject('accesos',obj);
           $scope.mensajeContra = true;
@@ -1118,7 +1067,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $timeout(function () { 
       $scope.mensajeErrorCoinciden = false;
     }, 5000);
-  }
+  };
   $scope.cerrarSesion = function(){
     firebase.auth().signOut().then(function() {
       console.log('cerrando sesion');   
@@ -1132,9 +1081,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.email = "";
   $scope.recuperarPassword = function(email){
     var auth = firebase.auth();
-    $scope.data = {};
-    // var email = $scope.email;
-    console.log(email);
+    $scope.data = {};  
     if(email != undefined){ 
       auth.sendPasswordResetEmail(email).then(function() { 
         $scope.mensaje_aceptado = 'Revisé su de correo electrónico';
@@ -1145,8 +1092,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           $state.go('login');
         },3000);
       }, function(error) {
-        if(error.code == "auth/user-not-found"){
-          console.log(error);
+        if(error.code == "auth/user-not-found"){ 
           $scope.mensaje_correo = '* El correo electrónico no esta registrado.';
           $scope.$digest();
           $timeout(function(){
@@ -1159,8 +1105,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           $timeout(function(){
             $scope.mensaje_correo = "";
           },3000);
-        }
-        // An error happened.
+        } 
       });
     }
     else{
@@ -1170,7 +1115,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $scope.mensaje_correo = "";
       },3000);  
     }
-  }
+  };
 })
 
 .controller('ayudaCtrl',function ($scope){
@@ -1180,17 +1125,10 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 .filter('startFrom', function() {
     return function(input, start) {
         if (!input || !input.length) { return; }
-        start = +start; //parse to int
+        start = +start;  
         return input.slice(start);
     };
-})
-
-// .filter('toArray', function() { return function(obj) {
-//     if (!(obj instanceof Object)) return obj;
-//     return _.map(obj, function(val, key) {
-//         return Object.defineProperty(val, '$key', {__proto__: null, value: val.key.split('_')});
-//     });
-// }})
+}) 
 
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
