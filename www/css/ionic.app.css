@@ -10070,3 +10070,6 @@ progress::-moz-progress-bar {
 
 audio {
   width: 100%; }
+
+input#file {
+  color: transparent; }

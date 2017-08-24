@@ -1,6 +1,21 @@
 <ion-view view-title="Cuenta" class="bar-positive bg-dash">
   <ion-content class="padding-20">
   	<form name="form" novalidate>
+		<h4>Establecer Foto de Perfil</h4>
+  		<ul class="list"> 
+  			<li class="item p0">
+  				<input class="button button-clear button-dark hidden" id="file" type="file" name="file" custom-on-change="uploadFile" >  
+  			</li> 
+  			<label class="item-mensaje balanced"> 
+	            <ul> 
+	              <li class="balanced" ng-show="mensajeFoto">
+	                * Foto se actualizo correctamente.
+	              </li>
+	            </ul>  
+	      	</label> 
+  		</ul>
+  		<!-- <button ng-click="showConfirm()" class="p0">Cargar Foto</button> -->
+	  	<div class="divider"></div>
 	  	<div class="list">
 			<h4>Cambiar Nombre</h4>
 	  		<label class="item item-input item-floating-label">

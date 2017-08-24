@@ -946,7 +946,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
 })
 
-.controller('cuentaCtrl', function($scope, $cookies, $ionicHistory, $state, $rootScope, $timeout){
+.controller('cuentaCtrl', function($scope, $cookies, $ionicHistory, $state, $rootScope, $timeout, $ionicPopup){
 
   $scope.uid = $cookies.getObject('uid');
   $scope.mensajeNombre = false;
@@ -1060,7 +1060,89 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         console.log(error);
       });
     }
+  }; 
+  
+
+  $scope.showConfirm = function() {
+    var customTemplate = '<ul class="list">'+
+        '<li class="item p0">'+
+            '<p class=" button button-clear button-dark  button-small ">{{ foto }} carga archivo y luego confirma.</p>'+
+        '</li>'+
+        '<li class="item p0">'+
+          '<input class="button button-outline button-dark hidden" type="file" name="file" custom-on-change="uploadFile" >  '+
+        '</li> '+ 
+    '</ul>'; 
+     var confirmPopup = $ionicPopup.confirm({
+       title: 'Foto de perfil',
+       template:customTemplate,
+       buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Actualizar',
+          type: 'button-block button-positive',
+          onTap: function(e) {
+            if (!$scope.fotoUpdate) {
+              // console.log($scope.fotoUpdate[0]);
+              //don't allow the user to close unless he enters wifi password
+              
+              e.preventDefault();
+            } else {
+              return $scope.fotoUpdate;
+            }
+          } 
+        }
+        ]
+
+     });
+     confirmPopup.then(function(res) {
+      console.log(res);
+       if(res) {
+         // $scope.actualizarFoto();
+       } else {
+         console.log('You are not sure');
+       }
+     });
+   };
+
+  $scope.uploadFile = function(event){
+    user = firebase.auth().currentUser;
+    var file = event.target.files[0]; 
+    var storageRef = firebase.storage().ref("usuarios/" + user.uid + "/" +file.name);   
+    var task = storageRef.put(file);  
+      task.on('state_changed',
+        function progress(snapshot){ 
+        },
+        function error() {
+          alert('There was a problem uploading your file')
+        },
+        function complete() {
+          storageRef.getDownloadURL().then(function(snapshot){ 
+            user.updateProfile({
+              photoURL: snapshot
+              }).then(function(){ 
+                $scope.mensajeFoto = true;
+                $scope.$apply(function(){
+                  $scope.foto = user.photoURL; 
+                });
+                $timeout(function () { 
+                  $scope.mensajeFoto = false;
+                  $state.reload(true);
+                  document.getElementById("file").value = "";
+                  $scope.cerrarSesion();
+                }, 3000);
+                $scope.$digest();
+              });
+          },function(error) {
+            console.log(error);
+          });
+
+
+      });
   };
+
+  // $scope.actualizarFoto();
 
   $scope.contraNoCoincide = function(){
     $scope.mensajeErrorCoinciden = true;
@@ -1129,6 +1211,23 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         return input.slice(start);
     };
 }) 
+
+.filter('trusted', ['$sce', function ($sce) {
+    return function(url) {
+        return $sce.trustAsResourceUrl(url);
+    };
+}]) 
+
+
+.directive('customOnChange', function() {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      var onChangeHandler = scope.$eval(attrs.customOnChange);
+      element.bind('change', onChangeHandler);
+    }
+  };
+})
 
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
