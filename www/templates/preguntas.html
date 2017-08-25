@@ -1,16 +1,27 @@
 <ion-view  class="bar-positive bg-dash">
   	<ion-header-bar class="bar bar-positive">
     <h1 class="title">{{nombre}}</h1> 
+    <!-- <ion-nav-buttons side="left"> -->
+	    <span side="rigth" class="progress-span  button item-button-right">{{ counter | secondsToDateTime | date:'HH:mm:ss'}}</span>
+  	<!-- </ion-nav-buttons> -->
   	</ion-header-bar>  
 	<ion-content class="padding-20"> 
 		<form name="preguntas">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col ">
 		  			<progress max="{{counterMax}}" min="0" value="{{counter}}"> aqui</progress>
 		    		<span class="progress-span button-clear  button item-button-right">{{ counter | secondsToDateTime | date:'HH:mm:ss'}}</span>
 		  		</div> 
+	    	</div> -->
+			<div class="row">
+	    		<div class="col"> 
+    				<div data-tap-disabled="true" >
+    					<audio controls>                                        
+    						<source ng-src="{{ item.audio | trusted }}" type="audio/mp3">                                                        
+    					</audio>
+    				</div> 
+	    		</div>  
 	    	</div>
-
 	    	<ion-list ng-repeat="item in data | startFrom: currentPage * pageSize | limitTo:pageSize"> 
 				<!-- <button ion-button color="secondary" outline ng-click="logOutEmail()">logOutEmail</button> -->
 		      	<div class="row">
@@ -30,15 +41,7 @@
 					  	</label>  
 				  	</div>
 				</div>   
-		    	<div class="row">
-		    		<div class="col"> 
-	    				<div data-tap-disabled="true" >
-	    					<audio controls>                                        
-	    						<source ng-src="{{ item.audio | trusted }}" type="audio/mp3">                                                        
-	    					</audio>
-	    				</div> 
-		    		</div>  
-		    	</div>
+		    	
 
 	    	</ion-list>
 	    	<!-- <button ng-click="stopTimeout()" ng-show="!stopped">STOP ME !</button> -->
