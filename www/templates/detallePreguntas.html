@@ -13,7 +13,7 @@
 			    	</div>
 		    	</div> 
 		      	<div class="list">  
-			    	<p class="progress-span p-r-s">Pregunta {{currentPage+1}} de {{numberOfPages()}}</p>
+			    	<p class="progress-span p-r-s">Mostrando {{currentPage+1}} de {{numberOfPages()}}</p>
 				  	<div class="card m-t-0">
 					  	<label ng-repeat="(key_child, o) in item.ops" ng-click="check()" class="item item-border item-icon-left item-radio">
 						    <input type="radio" name="{{item.pre}}" ng-model="$parent.item.res_temp" value="{{key_child}}" ng-disabled="true">
@@ -26,6 +26,7 @@
 		              		<i class="radio-icon ion-checkmark"></i>
 					  	</label>  
 				  	</div>
+				  	<p class="progress-span p-r-s"><b>ID de Pregunta: {{item.i}}</b></p>
 				</div>   
 
 	    	</ion-list>

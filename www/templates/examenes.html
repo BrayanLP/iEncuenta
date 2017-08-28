@@ -1,14 +1,15 @@
 <ion-view view-title="Examenes" class="bar-positive bg-dash">
   <ion-content class=""> 
     <div class="row flex-wrap">
-    	<div class="col col-50 " ng-repeat="exa in loadExamenes | startFrom: currentPage * pageSize | limitTo:pageSize"> 
+    <!-- {{loadExamenes}} -->
+    	<div class="col col-50 " ng-repeat="(id, exa) in loadExamenes | orderBy:-id"> 
             <div class="card">
     			<div class="item item-divider">
-    				Examen {{$index + 1}}
+    				Examen {{id + 1}}
     			</div>
     			<div class="item item-text-wrap">
     			
-    				<canvas id="pie" width="120" height="120" class="chart chart-pie" chart-options="options" chart-data="[exa.bueno,exa.malo,exa.nulo]" chart-labels="labels" chart-options="options" chart-colors="colors"></canvas>
+    				<!-- <canvas id="pie" width="120" height="120" class="chart chart-pie" chart-options="options" chart-data="[exa.bueno,exa.malo,exa.nulo]" chart-labels="labels" chart-options="options" chart-colors="colors"></canvas> -->
 	    			
 	    			<h5><span class="cuadrado bueno"></span> <b>{{exa.bueno}}</b> Correctas<br></h5>
 			  		<h5><span class="cuadrado malo"></span> <b>{{exa.malo}}</b> Incorrectas <br> </h5>
@@ -21,7 +22,7 @@
     	</div>
     </div>
     <div class="padding-20">
-        <div class="row" ng-if="loadExamenes.length > 3">
+        <!-- <div class="row" ng-if="loadExamenes.length > 3">
             <div class="col col-50">
                 <button class="button button-block button-calm icon-left ion-chevron-left" ng-disabled="currentPage == 0" ng-click="anterior()">
                     Anterior
@@ -32,7 +33,7 @@
                      Siguiente 
                 </button>
             </div>
-        </div>
+        </div> -->
         <label  ng-show="loadExamenes == undefined" class="item-mensaje"> 
             <ul>
                 <li>

@@ -9838,6 +9838,10 @@ form.list {
   background-color: transparent;
   border-width: 0px; }
 
+.list h4,
+.list .card .item {
+  text-align: justify; }
+
 .bg-c {
   background-color: #fff; }
 

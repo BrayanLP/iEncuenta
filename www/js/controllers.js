@@ -109,7 +109,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   //cerrar sesion del usuario
   $scope.logOutEmail = function(){
     firebase.auth().signOut().then(function() {
-      console.log('cerrando sesion');   
+      // alert('cerrando sesion');   
     }, function(error) { 
     });
   };
@@ -257,7 +257,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       });    
     }
     else{  
-      console.log("ocurrio algo al generar"); 
+      alert("ocurrio algo al generar"); 
     }
   }; 
 
@@ -372,7 +372,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       });    
     }
     else{  
-      console.log("ocurrio algo al generar");
+      alert("ocurrio algo al generar");
     }
   }; 
 
@@ -489,7 +489,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $scope.finalizar();
         $timeout.cancel(timer_object);
       } else {
-        console.log('continuar examen');
+        // alert('continuar examen');
       }
     });
   };
@@ -534,19 +534,20 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       $scope.stopped = false;
     }
     else if(hora === 1){
-      var cant = 60 * 60;
-      $scope.counterMax = cant;
-      $scope.counter = cant;
+      var cant2 = 60 * 60;
+      $scope.counterMax = cant2;
+      $scope.counter = cant2;
       $scope.stopped = false;
       
     }
     else{
-      // console.log('tiempo indefinido');
+      // alert('tiempo indefinido');
 
     }
 
     
-  }
+  };
+
   $scope.initTime();
   // $scope.counter = 100;
   $scope.tiempoPorPregunta = function(){
@@ -563,17 +564,17 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   $scope.stopTimeout = function() {
     $scope.stopped = true;
     $timeout.cancel(timer_object);
-  }
+  };
 
   $scope.restatTimeout = function() {
     $scope.stopped = false;
     timer_object = $timeout($scope.tiempoPorPregunta, 1000);
-  }
+  };
 
   $scope.play = function(src) {
     var media = new Media(src, null, null, mediaStatusCallback);
     $cordovaMedia.play(media);
-  }
+  };
 
   // $scope.tiempoPorPregunta();
   $scope.loadPreguntas();
@@ -612,7 +613,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $scope.malo += 1; 
       }
       else{
-        console.log("error no identificado");
+        alert("error no identificado");
       }
     }); 
     $scope.initGrafico();
@@ -862,7 +863,9 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
     $scope.bueno = 0;
     $scope.malo = 0;
     var obj = {};
+    var i = 0;
     angular.forEach(data, function( value, i){ 
+      // alert(value);
       if(value.res_temp == null || value.res_temp == ''){
         $scope.nulo += 1; 
       } 
@@ -873,7 +876,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $scope.malo += 1; 
       }
       else{
-        console.log("error no identificado");
+        alert("error no identificado");
       }
     }); 
     obj = { 
@@ -957,7 +960,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   usuario.on('value' , function(response) {   
     $scope.getInfo = response.val();
     $scope.temp = response.val();  
-    console.log($scope.getInfo.nombre_completo); 
+    // alert($scope.getInfo.nombre_completo); 
     $scope.$digest(); 
   });
 
@@ -969,7 +972,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       $scope.getInfo.pass2 != '' && $scope.getInfo.pass2 != undefined && 
       $scope.getInfo.pass === $scope.getInfo.pass2
        ){
-      // console.log("estoy modificando todo"); 
+      // alert("estoy modificando todo"); 
       $scope.actualizarNombre();
       $scope.actualizarContrasena(); 
       $scope.getInfo.pass = '';
@@ -982,7 +985,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       ($scope.getInfo.pass2 != '' && $scope.getInfo.pass2 != undefined ) &&
       $scope.getInfo.pass === $scope.getInfo.pass2
       ){
-      // console.log('estoy modificando solo la contraseña'); 
+      // alert('estoy modificando solo la contraseña'); 
       $scope.actualizarContrasena(); 
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
@@ -994,19 +997,19 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       $scope.actualizarNombre();
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
-      // console.log("estoy modificando solo el nombre"); 
+      // alert("estoy modificando solo el nombre"); 
     }
     else if(
       $scope.getInfo.pass != $scope.getInfo.pass2 &&
       $scope.getInfo.nombre_completo === $scope.temp.nombre_completo
       ){
-      // console.log("contrasenas no coinciden");
+      // alert("contrasenas no coinciden");
       $scope.contraNoCoincide();
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
     }
     else{
-      // console.log("no hice nada");
+      // alert("no hice nada");
       $scope.getInfo.pass = '';
       $scope.getInfo.pass2 = '';
     }
@@ -1057,7 +1060,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         $timeout(function () { 
           $scope.mensajeErrorContra = false; 
         }, 5000);
-        console.log(error);
+        // alert(error);
       });
     }
   }; 
@@ -1084,7 +1087,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           type: 'button-block button-positive',
           onTap: function(e) {
             if (!$scope.fotoUpdate) {
-              // console.log($scope.fotoUpdate[0]);
+              // alert($scope.fotoUpdate[0]);
               //don't allow the user to close unless he enters wifi password
               
               e.preventDefault();
@@ -1097,11 +1100,11 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
 
      });
      confirmPopup.then(function(res) {
-      console.log(res);
+      // alert(res);
        if(res) {
          // $scope.actualizarFoto();
        } else {
-         console.log('You are not sure');
+         // alert('You are not sure');
        }
      });
    };
@@ -1114,8 +1117,8 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       task.on('state_changed',
         function progress(snapshot){ 
         },
-        function error() {
-          alert('There was a problem uploading your file')
+        function error(error) {
+          alert(error);
         },
         function complete() {
           storageRef.getDownloadURL().then(function(snapshot){ 
@@ -1135,7 +1138,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
                 $scope.$digest();
               });
           },function(error) {
-            console.log(error);
+            alert(error);
           });
 
 
@@ -1152,9 +1155,9 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   };
   $scope.cerrarSesion = function(){
     firebase.auth().signOut().then(function() {
-      console.log('cerrando sesion');   
+      // alert('cerrando sesion');   
     }, function(error) {
-      console.log(error);
+      // alert(error);
     });
   };
 })
