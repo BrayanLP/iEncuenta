@@ -597,10 +597,19 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
       });
     }, 100
   );
+  $scope.uid = $cookies.getObject('uid');
+  var codigo_examen = firebase.database().ref('usuarios/' + $scope.uid + '/examenes');
+  codigo_examen.on('value' ,function(response) {   
+    $scope.array = response.val();
+    $scope.exam =  "Examen "+Object.keys($scope.array).length;
+    // console.log(Object.keys($scope.array).length);   
+  });
+
   $scope.$on('$destroy', redirect);
   $scope.nombre = $cookies.getObject('nombre');
   var llave = $cookies.getObject('key');
   $scope.key =llave;  
+  // console.log($scope.key);
   $scope.initData = function(){
     angular.forEach($scope.data, function( value, i){ 
       if(value.res_temp == null || value.res_temp == ''){

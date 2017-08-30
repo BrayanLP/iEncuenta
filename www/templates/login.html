@@ -14,7 +14,7 @@
             </label>
             <label class="item-mensaje"> 
               <ul> 
-                <li ng-show="signupForm.email.$error.email">
+                <li ng-show="loginForm.email.$error.email ||  loginForm.email.$error.required">
                   * Correo Electrónico no valido.
                 </li>
                 <li ng-show="mensaje_correo" ng-bind="mensaje_correo">

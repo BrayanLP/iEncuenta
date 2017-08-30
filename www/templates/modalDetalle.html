@@ -10,6 +10,15 @@
     <ion-list ng-repeat="item in detallePreguntas | startFrom: currentPage * pageSize | limitTo:pageSize"> 
       <!-- <button ion-button color="secondary" outline ng-click="logOutEmail()">logOutEmail</button> -->
       <div class="row">
+        <div class="col"> 
+          <div data-tap-disabled="true" >
+            <audio controls>                                        
+              <source ng-src="{{ item.det_audio | trusted }}" type="audio/mp3">                                                        
+            </audio>
+          </div> 
+        </div>
+      </div> 
+      <div class="row">
         <div class="col">
           <h4 class="m0" ng-model="$parent.titulo">{{item.titulo}}</h4>
         </div>
