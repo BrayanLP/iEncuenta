@@ -1,0 +1,37 @@
+Eliminas condova-plugin-console
+======================
+ionic cordova plugin rm cordova-plugin-console
+
+generate apk
+==============
+
+ionic cordova build --release android
+ionic build --release android
+
+keytool
+========
+abre cmd y ve hasta :
+C:\Program Files\Java\jre1.8.0_101\bin 
+
+luego ejecuta esto:
+keytool -genkey -v -keystore "D:\PMP\01. Aplicaciones\V1.03\encuestas-key.keystore" -alias alias-name -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -genkey -v -keystore encuestas-key.keystore -alias alias-name -keyalg RSA -keysize 2048 -validity 10000
+
+jarsigner
+=========
+
+D:\PMP\01. Aplicaciones\V1.03\
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "D:\PMP\01. Aplicaciones\V1.03\encuestas-key.keystore" "D:\PMP\01. Aplicaciones\V1.03\platforms\android\build\outputs\apk\android-release-unsigned.apk" alias-name
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore encuestas-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias-name
+
+pwd
+====
+
+zipalign
+===========
+
+"C:\Android\sdk\build-tools\25.0.3\zipalign" -v 4 "D:\PMP\01. Aplicaciones\V1.03\platforms\android\build\outputs\apk\android-release-unsigned.apk" "D:\PMP\01. Aplicaciones\V1.03\encuestas.apk"
+
+/path/to/Android/sdk/build-tools/VERSION/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk iencuestas.apk
+~/Library/Android/sdk/build-tools/26.0.0/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk iencuestas.apk
