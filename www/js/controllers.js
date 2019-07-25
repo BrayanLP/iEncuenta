@@ -250,7 +250,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
           value.pre = i; 
           $scope.data_temp.push(value);  
         }); 
-        $scope.preguntas_random(50, $scope.data_temp);   
+        $scope.preguntas_random(9, $scope.data_temp);   
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
         $scope.cargando("1500");
         $cookies.putObject('hora','1');
@@ -365,7 +365,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
             $scope.data_temp.push(child); 
           }); 
         }); 
-        $scope.preguntas_random(200, $scope.data_temp);    
+        $scope.preguntas_random(50, $scope.data_temp);    
         $ionicHistory.clearCache().then(function(){ $state.go('preguntas');});
         $scope.cargando("1500");
         $cookies.putObject('hora','2');
@@ -715,6 +715,7 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
         title: 'Importante !',
         content: 'No es posible retroceder.'
       }).then(function(res) {
+        
       });
     }, 100
   );
@@ -759,13 +760,18 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   
   $ionicModal.fromTemplateUrl('templates/modalDetalle.html', { 
       scope: $scope, 
-      animation: 'slide-in-up'
+      animation: 'slide-in-up',
+      hardwareBackButtonClose: false
     }).then(function(modal) {
       $scope.modal = modal;
+      // alert($scope.modal, modal);
+      
   });
 
-  $scope.cerrar_modal = function() { 
+  $scope.cerrar_modal = function(id) {  
     $scope.modal.hide(); 
+    var audio = document.getElementById("audio-"+id);
+    audio.pause();
   };
 
   // Open the login modal
@@ -1212,8 +1218,14 @@ angular.module('starter.controllers', ['ngCookies','chart.js'])
   };
 })
 
-.controller('ayudaCtrl',function ($scope){
-
+.controller('detalleBack',function ($scope, $ionicPlatform){
+  var redirect = $ionicPlatform.registerBackButtonAction(
+    function() { 
+        var audio = document.getElementById('audio');
+        audio.pause(); 
+    }, 100
+  );
+  $scope.$on('$destroy', redirect);
 })
 
 .filter('startFrom', function() {

@@ -11,7 +11,7 @@
 		    		<span class="progress-span button-clear  button item-button-right">{{ counter | secondsToDateTime | date:'HH:mm:ss'}}</span>
 		  		</div> 
 	    	</div> -->
-			<div class="row">
+			<div class="row"  ng-repeat="item in data | startFrom: currentPage * pageSize | limitTo:pageSize">
 	    		<div class="col"> 
     				<div data-tap-disabled="true" >
     					<audio controls>                                        

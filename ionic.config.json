@@ -1,4 +1,6 @@
 {
   "name": "iencuestas",
-  "app_id": "7d4f5834"
+  "app_id": "7d4f5834",
+  "integrations": {},
+  "type": "ionic1"
 }
